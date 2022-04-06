@@ -1,4 +1,5 @@
 # 자주 쓰는 것들
+
 ## 1. List Comprehension Using If-Else
 ```python
 my_list = [
@@ -83,11 +84,15 @@ print("Most frequent item:", max(set(my_list), key=my_list.count))
 
 ## 7. Error Handling
 ```python
-num1, num2 = 2, 0
+num = 0
+y = [10, 20, 30]
+
 try:
-    print(num1 / num2)
+    print(y[1] / num)
 except ZeroDivisionError:
     print("Exception! Division by Zero not permitted.")
+except IndexError:
+    print("Exception! Index out")
 else:
     print('no exception raised')
 finally:
@@ -361,6 +366,123 @@ unique([1,1,2,3])
 # List has duplicates
 ```
 
+# Tip
+## 1. Iterate with Enumerate x For Loops with If
+```python
+data = [1, 2, -4, -3]
+for idx in range(len(data)):
+    if data[idx] < 0:
+        data[idx] = 0
+print(data)
+data = [1, 2, -4, -3]
+for idx, value in enumerate(data):
+    if value < 0:
+        data[idx] = 0
+print(data)
+```
+## 2. List Comprehension x For Loops
+```python
+squares = []
+for i in range(10):
+    squares.append(i ** 2)
+print(squares)
+squares = [i ** 2 for i in range(10)]
+```
+## 3. Sort iterables with sorted()
+```python
+data = [3, 5, 1, 10, 9]
+sorted_data = sorted(data, reverse=True)
+print(sorted_data)
+
+data = [
+    {'name': 'John', 'age': 23},
+    {'name': 'Bob', 'age': 20},
+    {'name': 'Alice', 'age': 21},
+]
+data_sorted = sorted(data, key=lambda x: x['age'])
+data_sorted
+```
+## 4. Unique values with secrets
+```python
+my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 7, 7, 7]
+my_set = set(my_list)
+my_set
+```
+## 5. Generators replacement for Lists
+```python
+import sys
+
+my_lst = [i for i in range(10000)]
+print(sum(my_lst))
+print(sys.getsizeof(my_lst))
+my_gen = (i for i in range(10000))  # lazily
+sum(my_gen)
+print(sys.getsizeof(my_gen))
+```
+
+## 6. default values for dictionary keys
+```python
+my_dict = {'item': 'football', 'price': '100'}
+count = my_dict['count']  # error
+count = my_dict.get(
+    'count', 0
+)  # return default value if key not found return None
+my_dict.setdefault('count', 1)
+my_dict
+```
+## 7. Count objects with collections.Counter
+```python
+from collections import Counter
+my_lst = [10, 10, 10, 5, 5, 2, 9, 9, 9, 9, 9, 9, 9]
+counter = Counter(my_lst)
+counter.most_common(2)  # top 2 most frequently item
+counter.most_common(1)[0][0]  # top most frequently item
+```
+
+## 8. f-Strings > str.format() # python 3.6>=
+```python
+name = 'Alex'
+my_str = f'hello {name}'
+print(my_str)
+
+i = 10
+print(f'{i} suqared is {i**i}')
+```
+## 9. concat strings with .join()
+```python
+list_of_str = ['Hello', 'my', 'friend']
+## bad way
+my_str = ""
+for i in list_of_str:
+    my_str += i + " "  # need create new string each time
+print(my_str)
+## good way
+' '.join(list_of_str)
+```
+
+## 10. merge dictionaries - This feature is updated again in 3.9 using |
+```python
+d1 = {'name': 'Alex', 'age': 23}
+d2 = {'name': 'Alex', 'city': 'New York'}
+merged_dict = {**d1, **d2}
+merged_dict
+```
+## 11. simplify if statements for multiple check
+```python
+colors = ['red', 'green', 'blue']
+c = 'red'
+if c == 'red' or c == 'green' or c == 'blue':
+    print('is main color')
+
+if c in colors:
+    print('is main color')
+```
+## 12. merge dict(In Python 3.9.0 or greater we can merge dictionaries using `|`
+```python
+d1 = {"name": "Alex", "age": 25}
+d2 = {"name": "Alex", "city": "New York"}
+merged_dict = d1 | d2
+```
 # list/dict/set comprehension
 ## list comprehension
 ```python
@@ -418,6 +540,14 @@ numbers = [1, 2, 3, 4, 5]
 # store the string “Two” if the value is divisible by 2. Or if the value is divisible by 3 we are storing “Three”, else we are storing “not 2 & 3”.
 # ['Two' if x %2==0 else x%3==0 'Three' for x in lst]
 ['Two' if x % 2 == 0 else 'Three' if x % 3 == 0 else x for x in lst]
+```
+
+**cf)** ternary op. vs list comprehension
+```python
+#ternary
+[on_true] if [expression] else [on_false]
+#list comprehension
+[x ** 2 for x in lst if x % 3 == 0 or x % 5 == 0]
 ```
 
 # Todo

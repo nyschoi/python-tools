@@ -3,16 +3,14 @@ class MyError(Exception):
         self.msg = msg
 
     def __str__(self):
-        self.msg = '__str__ msg'
         return self.msg
 
 
 def input_cores():
     try:
-        core_ = input("input your cores (max 10):")
-        if int(core_) > 10:
-            # raise MyError("Exceeded the limit!")
-            raise MyError
+        core_ = int(input("input your cores (max 10):"))
+        if core_ > 10:
+            raise MyError("Exceeded the limit!")
         print("Cores : ", core_)
     except MyError as e:
         print(e)
